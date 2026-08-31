@@ -13,20 +13,27 @@ npm run preview  # 빌드 결과 로컬 확인
 
 ## 글 쓰기
 
-`src/content/blog/`에 `.md` 파일 추가:
+```sh
+npm run new -- "글 제목"              # src/content/blog/<slug>.md 생성, pubDate 오늘로
+npm run new -- "글 제목" custom-slug  # 슬러그 직접 지정
+```
+
+생성되는 frontmatter:
 
 ```md
 ---
 title: 글 제목
-description: 한 줄 요약 (목록·RSS·SEO에 쓰임)
-pubDate: 2026-08-31
-tags: [태그1, 태그2]
+description:            # 한 줄 요약 (목록·RSS·SEO). 채워넣기
+pubDate: 2026-08-31     # 자동
+tags: []
 ---
 
 본문...
 ```
 
-`main`에 push하면 `.github/workflows/deploy.yml`이 빌드·배포한다.
+`updatedDate: 2026-09-05`를 넣으면 글에 수정일도 표시된다.
+
+`main`에 push하면 `.github/workflows/deploy.yml`이 빌드·배포한다 (1~2분).
 
 ## 스타일
 
