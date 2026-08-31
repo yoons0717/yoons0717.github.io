@@ -1,0 +1,72 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<ul class="post-list">
+	{
+		posts.map((post) => (
+			<li>
+				<a class="title" href={`/blog/${post.id}/`}>{post.data.title}</a>
+				<div class="meta">
+					<FormattedDate date={post.data.pubDate} />
+					{post.data.tags.length > 0 && (
+						<span class="tags">
+							{post.data.tags.map((tag) => (
+								<a href={`/tags/${tag}/`}>#{tag}</a>
+							))}
+						</span>
+					)}
+				</div>
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.post-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.post-list li {
+		padding: 1.1em 0;
+		border-bottom: 1px solid var(--border);
+	}
+	.post-list li:first-child {
+		padding-top: 0;
+	}
+	.title {
+		font-size: 1.2em;
+		font-weight: 700;
+		color: var(--heading);
+	}
+	.title:hover {
+		color: var(--accent);
+		text-decoration: none;
+	}
+	.meta {
+		margin-top: 0.3em;
+		font-size: 0.9em;
+		color: var(--text-muted);
+		display: flex;
+		gap: 0.8em;
+		flex-wrap: wrap;
+	}
+	.tags {
+		display: flex;
+		gap: 0.5em;
+	}
+	.tags a {
+		color: var(--text-muted);
+	}
+	.tags a:hover {
+		color: var(--accent);
+	}
+</style>

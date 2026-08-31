@@ -1,0 +1,49 @@
+---
+---
+
+<button id="theme-toggle" type="button" aria-label="테마 전환">
+	<span class="light-icon" aria-hidden="true">☀</span>
+	<span class="dark-icon" aria-hidden="true">☾</span>
+</button>
+
+<style>
+	button {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.2em;
+		height: 2.2em;
+		padding: 0;
+		background: transparent;
+		border: 1px solid var(--border);
+		border-radius: 6px;
+		color: var(--text);
+		cursor: pointer;
+		font-size: 1em;
+		line-height: 1;
+	}
+	button:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+	.dark-icon {
+		display: none;
+	}
+	:global(:root[data-theme='dark']) .light-icon {
+		display: none;
+	}
+	:global(:root[data-theme='dark']) .dark-icon {
+		display: inline;
+	}
+</style>
+
+<script>
+	const btn = document.getElementById('theme-toggle');
+	btn?.addEventListener('click', () => {
+		const next =
+			document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+		document.documentElement.dataset.theme = next;
+		localStorage.setItem('theme', next);
+		document.dispatchEvent(new CustomEvent('theme-change', { detail: next }));
+	});
+</script>

@@ -1,0 +1,30 @@
+---
+import { GITHUB_URL } from '../consts';
+const today = new Date();
+---
+
+<footer>
+	<span>&copy; {today.getFullYear()} yoons0717</span>
+	<a href={GITHUB_URL} target="_blank" rel="noopener">GitHub</a>
+	<a href="/rss.xml">RSS</a>
+</footer>
+
+<style>
+	footer {
+		max-width: var(--content-width);
+		margin: 0 auto;
+		padding: 2em 1em 3em;
+		border-top: 1px solid var(--border);
+		display: flex;
+		gap: 1em;
+		flex-wrap: wrap;
+		color: var(--text-muted);
+		font-size: 0.9em;
+	}
+	footer a {
+		color: var(--text-muted);
+	}
+	footer a:hover {
+		color: var(--accent);
+	}
+</style>

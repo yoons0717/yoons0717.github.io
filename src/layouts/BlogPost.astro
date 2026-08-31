@@ -1,0 +1,134 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, GISCUS } from '../consts';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, tags } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<BaseHead title={`${title} · ${SITE_TITLE}`} description={description} />
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<header class="post-header">
+					<h1>{title}</h1>
+					<div class="meta">
+						<FormattedDate date={pubDate} />
+						{
+							updatedDate && (
+								<span class="updated">
+									(수정: <FormattedDate date={updatedDate} />)
+								</span>
+							)
+						}
+					</div>
+					{
+						tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<a href={`/tags/${tag}/`}>#{tag}</a>
+								))}
+							</div>
+						)
+					}
+				</header>
+
+				<div class="prose">
+					<slot />
+				</div>
+			</article>
+
+			<section class="comments">
+				<h2>댓글</h2>
+				<div id="giscus-container"></div>
+				<script is:inline define:vars={{ GISCUS }}>
+					(function () {
+						var theme =
+							document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+						var s = document.createElement('script');
+						s.src = 'https://giscus.app/client.js';
+						s.setAttribute('data-repo', GISCUS.repo);
+						s.setAttribute('data-repo-id', GISCUS.repoId);
+						s.setAttribute('data-category', GISCUS.category);
+						s.setAttribute('data-category-id', GISCUS.categoryId);
+						s.setAttribute('data-mapping', 'pathname');
+						s.setAttribute('data-strict', '1');
+						s.setAttribute('data-reactions-enabled', '1');
+						s.setAttribute('data-emit-metadata', '0');
+						s.setAttribute('data-input-position', 'top');
+						s.setAttribute('data-theme', theme);
+						s.setAttribute('data-lang', 'ko');
+						s.crossOrigin = 'anonymous';
+						s.async = true;
+						document.getElementById('giscus-container').appendChild(s);
+
+						document.addEventListener('theme-change', function (e) {
+							var t = e.detail === 'dark' ? 'dark' : 'light';
+							var frame = document.querySelector('iframe.giscus-frame');
+							if (frame)
+								frame.contentWindow.postMessage(
+									{ giscus: { setConfig: { theme: t } } },
+									'https://giscus.app',
+								);
+						});
+					})();
+				</script>
+			</section>
+		</main>
+		<Footer />
+	</body>
+</html>
+
+<style>
+	.post-header {
+		margin-bottom: 2em;
+		padding-bottom: 1.5em;
+		border-bottom: 1px solid var(--border);
+	}
+	.post-header h1 {
+		margin-bottom: 0.3em;
+	}
+	.meta {
+		color: var(--text-muted);
+		font-size: 0.95em;
+	}
+	.updated {
+		margin-left: 0.5em;
+	}
+	.tags {
+		margin-top: 0.6em;
+		display: flex;
+		gap: 0.6em;
+		flex-wrap: wrap;
+		font-size: 0.9em;
+	}
+	.tags a {
+		color: var(--text-muted);
+	}
+	.tags a:hover {
+		color: var(--accent);
+	}
+	.prose :global(h2) {
+		margin-top: 1.6em;
+	}
+	.prose :global(img) {
+		display: block;
+		margin: 1.5em auto;
+	}
+	.comments {
+		margin-top: 4em;
+		padding-top: 2em;
+		border-top: 1px solid var(--border);
+	}
+</style>

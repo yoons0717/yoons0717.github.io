@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import PostList from '../components/PostList.astro';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
+---
+
+<Layout>
+	<section class="intro">
+		<h1>yoons0717 dev log</h1>
+		<p>개발하면서 배운 것들을 정리합니다.</p>
+	</section>
+
+	<section>
+		<h2>최근 글</h2>
+		<PostList posts={posts} />
+		<p class="more"><a href="/blog">전체 글 보기 →</a></p>
+	</section>
+</Layout>
+
+<style>
+	.intro {
+		margin-bottom: 3em;
+	}
+	.intro p {
+		color: var(--text-muted);
+	}
+	.more {
+		margin-top: 1.5em;
+	}
+</style>
