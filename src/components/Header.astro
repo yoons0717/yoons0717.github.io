@@ -46,6 +46,10 @@ import ThemeToggle from './ThemeToggle.astro';
 		font-weight: 700;
 		color: var(--heading);
 	}
+	.site-title::before {
+		content: '~/ ';
+		color: var(--text-muted);
+	}
 	.links {
 		display: flex;
 		gap: 0.9em;

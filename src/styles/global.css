@@ -5,34 +5,34 @@
  */
 
 :root {
-	--bg: #ffffff;
-	--bg-subtle: #f6f7f9;
-	--text: #1f2430;
-	--text-muted: #5b6472;
-	--heading: #12151c;
-	--border: #e5e9f0;
-	--accent: #2b5cff;
-	--accent-hover: #1a3fd0;
-	--code-bg: #f0f2f6;
+	--bg: #fcfcfd;
+	--bg-subtle: #f4f5f7;
+	--text: #1b1d22;
+	--text-muted: #6a7078;
+	--heading: #111318;
+	--border: #e7e8ec;
+	--accent: #a25c00;
+	--accent-hover: #7d4700;
+	--code-bg: #f1f2f5;
 
-	--font-sans: -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Pretendard',
-		'Segoe UI', 'Malgun Gothic', Roboto, 'Noto Sans KR', sans-serif;
-	--font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
-		monospace;
+	/* Everything is set in the mono face; Korean glyphs fall through to a system face. */
+	--font-sans: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'Apple SD Gothic Neo',
+		'Pretendard', 'Malgun Gothic', 'Noto Sans KR', Menlo, Consolas, monospace;
+	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
 	--content-width: 720px;
 }
 
 :root[data-theme='dark'] {
-	--bg: #14171c;
-	--bg-subtle: #1b1f26;
-	--text: #d7dbe0;
-	--text-muted: #9aa2ad;
-	--heading: #f0f2f5;
-	--border: #2a2f38;
-	--accent: #6f9bff;
-	--accent-hover: #8fb2ff;
-	--code-bg: #1f242c;
+	--bg: #0f1116;
+	--bg-subtle: #15181e;
+	--text: #c9d1d9;
+	--text-muted: #8b939e;
+	--heading: #e6ebf0;
+	--border: #262a31;
+	--accent: #e8a33d;
+	--accent-hover: #f2b95c;
+	--code-bg: #171a20;
 }
 
 * {
@@ -48,8 +48,9 @@ body {
 	text-align: left;
 	background: var(--bg);
 	color: var(--text);
-	font-size: 18px;
-	line-height: 1.7;
+	font-size: 17px;
+	line-height: 1.62;
+	letter-spacing: -0.005em;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
 	-webkit-font-smoothing: antialiased;
