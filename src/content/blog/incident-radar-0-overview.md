@@ -1,8 +1,9 @@
 ---
-title: "[Incident Radar] 축소판 에러 모니터링 서버 만들기 — 개요"
+title: "[Incident Radar 0] 축소판 에러 모니터링 서버 만들기 — 개요"
 description: 에러 모니터링 시스템 
 pubDate: 2026-08-31
 tags: [개발]
+seriesOrder: 0
 ---
 
 

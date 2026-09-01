@@ -1,8 +1,9 @@
 ---
-title: "[Incident Radar] 모노레포와 공유 스키마로 프론트·백 계약 묶기"
+title: "[Incident Radar 1] 모노레포와 공유 스키마로 프론트·백 계약 묶기"
 description: 앱 3개를 한 레포에 담고 Zod 스키마 하나로 프론트·백 API 계약을 묶은 과정. pnpm workspace, Turborepo, tsup dual build.
 pubDate: 2026-08-31
 tags: [개발]
+seriesOrder: 1
 ---
 
 
@@ -253,13 +254,3 @@ pnpm --filter @incident-radar/shared build      # ESM 1.6KB + CJS 3.3KB + d.ts 5
 pnpm --filter @incident-radar/shared typecheck  # tsc --noEmit
 pnpm --filter @incident-radar/shared test       # 6 passed
 ```
-
-## 겪은 함정
-
-- 처음엔 빌드 없이 `src` 를 직접 노출하는 방식으로 하려다 되돌렸습니다. 빌드 단계가 하나
-  줄어드는 대신, 백엔드의 `tsc`·`nest build`·Jest가 `node_modules` 안의 `.ts` 를 컴파일하도록
-  설정해야 합니다(`transformIgnorePatterns` 등). 설정이 더 늘어서, tsup 빌드가 훨씬 깔끔했습니다.
-- `.gitignore` 는 처음에 제대로 넣는 게 낫습니다. 이미 추적 중인 파일은 나중에 패턴을 추가해도
-  안 빠지고 `git rm --cached` 를 따로 해야 합니다. `node_modules`, `dist`, `.next`, `.env`,
-  `coverage` 는 첫 커밋 전에.
-

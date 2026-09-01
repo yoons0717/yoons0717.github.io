@@ -6,9 +6,12 @@ import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_TITLE, GISCUS } from '../consts';
 
-type Props = CollectionEntry<'blog'>['data'];
+type Props = CollectionEntry<'blog'>['data'] & {
+	prev?: CollectionEntry<'blog'>;
+	next?: CollectionEntry<'blog'>;
+};
 
-const { title, description, pubDate, updatedDate, tags } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, prev, next } = Astro.props;
 ---
 
 <!doctype html>
@@ -49,6 +52,29 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 				</div>
 			</article>
 
+			{
+				(prev || next) && (
+					<nav class="series-nav">
+						{prev ? (
+							<a class="series-nav-link prev" href={`/blog/${prev.id}/`}>
+								<span class="dir">← 이전</span>
+								<span class="t">{prev.data.title}</span>
+							</a>
+						) : (
+							<span />
+						)}
+						{next ? (
+							<a class="series-nav-link next" href={`/blog/${next.id}/`}>
+								<span class="dir">다음 →</span>
+								<span class="t">{next.data.title}</span>
+							</a>
+						) : (
+							<span />
+						)}
+					</nav>
+				)
+			}
+
 			<section class="comments">
 				<h2>댓글</h2>
 				<div id="giscus-container"></div>
@@ -87,6 +113,32 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 			</section>
 		</main>
 		<Footer />
+
+		<script is:inline>
+			(function () {
+				var blocks = document.querySelectorAll('pre[data-language="mermaid"]');
+				if (!blocks.length) return;
+				blocks.forEach(function (pre) {
+					var div = document.createElement('div');
+					div.className = 'mermaid';
+					div.textContent = pre.textContent;
+					pre.replaceWith(div);
+				});
+				var dark = document.documentElement.dataset.theme === 'dark';
+				import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')
+					.then(function (m) {
+						m.default.initialize({
+							startOnLoad: false,
+							theme: dark ? 'dark' : 'neutral',
+							fontFamily: 'inherit',
+						});
+						return m.default.run({ querySelector: '.mermaid' });
+					})
+					.catch(function (e) {
+						console.error('mermaid load failed', e);
+					});
+			})();
+		</script>
 	</body>
 </html>
 
@@ -134,5 +186,38 @@ const { title, description, pubDate, updatedDate, tags } = Astro.props;
 	.comments h2::before {
 		content: '$ ';
 		color: var(--accent);
+	}
+
+	.series-nav {
+		margin-top: 3em;
+		padding-top: 1.5em;
+		border-top: 1px solid var(--border);
+		display: flex;
+		gap: 1em;
+		justify-content: space-between;
+	}
+	.series-nav-link {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25em;
+		max-width: 48%;
+		font-size: 0.9em;
+	}
+	.series-nav-link.next {
+		text-align: right;
+		margin-left: auto;
+	}
+	.series-nav-link .dir {
+		color: var(--text-muted);
+	}
+	.series-nav-link .t {
+		color: var(--accent);
+	}
+	.series-nav-link:hover .t {
+		text-decoration: underline;
+	}
+	:global(.mermaid) {
+		margin: 1.5em 0;
+		text-align: center;
 	}
 </style>

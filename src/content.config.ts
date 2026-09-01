@@ -13,6 +13,8 @@ const blog = defineCollection({
 		pubDate: z.coerce.date(),
 		updatedDate: z.coerce.date().optional(),
 		tags: z.array(z.string()).default([]),
+		// 시리즈 글 순서. 이 값이 있는 글끼리 이전/다음 링크로 이어진다.
+		seriesOrder: z.number().optional(),
 	}),
 });
 
