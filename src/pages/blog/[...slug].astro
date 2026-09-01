@@ -26,9 +26,9 @@ type Props = CollectionEntry<'blog'> & {
 };
 
 const { prev, next, ...post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
 ---
 
-<BlogPost {...post.data} prev={prev} next={next}>
+<BlogPost {...post.data} prev={prev} next={next} headings={headings}>
 	<Content />
 </BlogPost>

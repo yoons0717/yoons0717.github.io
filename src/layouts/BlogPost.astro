@@ -9,9 +9,11 @@ import { SITE_TITLE, GISCUS } from '../consts';
 type Props = CollectionEntry<'blog'>['data'] & {
 	prev?: CollectionEntry<'blog'>;
 	next?: CollectionEntry<'blog'>;
+	headings?: { depth: number; slug: string; text: string }[];
 };
 
-const { title, description, pubDate, updatedDate, tags, prev, next } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, prev, next, headings } = Astro.props;
+const toc = (headings ?? []).filter((h) => h.depth === 2);
 ---
 
 <!doctype html>
@@ -46,6 +48,21 @@ const { title, description, pubDate, updatedDate, tags, prev, next } = Astro.pro
 						)
 					}
 				</header>
+
+				{
+					toc.length >= 3 && (
+						<nav class="toc" aria-label="목차">
+							<span class="toc-label">목차</span>
+							<ol>
+								{toc.map((h) => (
+									<li>
+										<a href={`#${h.slug}`}>{h.text}</a>
+									</li>
+								))}
+							</ol>
+						</nav>
+					)
+				}
 
 				<div class="prose">
 					<slot />
@@ -169,6 +186,32 @@ const { title, description, pubDate, updatedDate, tags, prev, next } = Astro.pro
 		color: var(--text-muted);
 	}
 	.tags a:hover {
+		color: var(--accent);
+	}
+	.toc {
+		margin: 0 0 2.5em;
+		padding: 1em 1.2em;
+		border: 1px solid var(--border);
+		border-radius: 4px;
+		font-size: 0.92em;
+	}
+	.toc-label {
+		color: var(--text-muted);
+		font-size: 0.8em;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+	}
+	.toc ol {
+		margin: 0.5em 0 0;
+		padding-left: 1.5em;
+	}
+	.toc li {
+		margin: 0.3em 0;
+	}
+	.toc a {
+		color: var(--text-muted);
+	}
+	.toc a:hover {
 		color: var(--accent);
 	}
 	.prose :global(h2) {
