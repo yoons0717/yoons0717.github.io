@@ -53,75 +53,7 @@ seriesOrder: 0
 
 ## 전체 구성도
 
-```mermaid
-flowchart TB
-
-  subgraph EXT[" 외부 / 부하 "]
-
-    SIM["트래픽 시뮬레이터"]
-
-    WH["webhook 수신처 (mock)"]
-
-  end
-
-  subgraph MONO[" 모노레포 (pnpm + Turborepo) "]
-
-    SHARED["packages/shared — Zod 계약 + 타입"]
-
-    subgraph FE[" apps/frontend — Next.js "]
-
-      DASH["개요 대시보드 (5초 폴링)"]
-
-    end
-
-    subgraph BE[" apps/backend — NestJS "]
-
-      API["수집·조회 API"]
-
-      CNT["카운터 (Redis / DB fallback)"]
-
-      WK["BullMQ 워커"]
-
-    end
-
-  end
-
-  subgraph INFRA[" 로컬 인프라 (docker-compose / colima) "]
-
-    PG[("PostgreSQL 16")]
-
-    RD[("Redis 7")]
-
-  end
-
-  CI["GitHub Actions — lint + test"]
-
-  SIM -->|POST /errors| API
-
-  DASH -->|GET stats/status/alerts| API
-
-  SHARED -.->|import| FE
-
-  SHARED -.->|import| BE
-
-  API --> PG
-
-  API --> CNT
-
-  CNT --> RD
-
-  CNT -.->|fallback| PG
-
-  API -->|enqueue| RD
-
-  WK --> RD
-
-  WK -->|기록| PG
-
-  WK -->|알림| WH
-
-  CI -.->|검증| MONO
-```
+![전체 구성도 — 모노레포(shared·frontend·backend), 로컬 인프라, CI, 외부 시뮬레이터·webhook](./images/0-architecture.svg)
 
 시뮬레이터, webhook 수신처, BullMQ 워커, CI는 목표 구성에 포함되어 있습니다. 다만 현재 시점에서는 아직 구현하지 않은 부분도 있으며, 이후 각 편에서 기능을 하나씩 채워 나갈 예정입니다.
 

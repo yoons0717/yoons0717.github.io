@@ -133,27 +133,33 @@ const toc = (headings ?? []).filter((h) => h.depth === 2);
 
 		<script is:inline>
 			(function () {
-				var blocks = document.querySelectorAll('pre[data-language="mermaid"]');
-				if (!blocks.length) return;
-				blocks.forEach(function (pre) {
-					var div = document.createElement('div');
-					div.className = 'mermaid';
-					div.textContent = pre.textContent;
-					pre.replaceWith(div);
-				});
-				var dark = document.documentElement.dataset.theme === 'dark';
-				import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs')
-					.then(function (m) {
-						m.default.initialize({
-							startOnLoad: false,
-							theme: dark ? 'dark' : 'neutral',
-							fontFamily: 'inherit',
-						});
-						return m.default.run({ querySelector: '.mermaid' });
-					})
-					.catch(function (e) {
-						console.error('mermaid load failed', e);
+				var imgs = document.querySelectorAll('.prose img');
+				if (!imgs.length) return;
+				function openLightbox(src, alt) {
+					var box = document.createElement('div');
+					box.className = 'zoom-lightbox';
+					var big = document.createElement('img');
+					big.src = src;
+					big.alt = alt || '';
+					box.appendChild(big);
+					function close() {
+						box.remove();
+						document.removeEventListener('keydown', onKey);
+					}
+					function onKey(e) {
+						if (e.key === 'Escape') close();
+					}
+					box.addEventListener('click', close);
+					document.addEventListener('keydown', onKey);
+					document.body.appendChild(box);
+				}
+				imgs.forEach(function (img) {
+					img.style.cursor = 'zoom-in';
+					img.setAttribute('role', 'button');
+					img.addEventListener('click', function () {
+						openLightbox(img.currentSrc || img.src, img.alt);
 					});
+				});
 			})();
 		</script>
 	</body>
@@ -259,8 +265,24 @@ const toc = (headings ?? []).filter((h) => h.depth === 2);
 	.series-nav-link:hover .t {
 		text-decoration: underline;
 	}
-	:global(.mermaid) {
-		margin: 1.5em 0;
-		text-align: center;
+	:global(.zoom-lightbox) {
+		position: fixed;
+		inset: 0;
+		z-index: 999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 3vmin;
+		background: rgba(0, 0, 0, 0.72);
+		cursor: zoom-out;
+	}
+	:global(.zoom-lightbox img) {
+		max-width: 96vw;
+		max-height: 92vh;
+		width: auto;
+		height: auto;
+		background: #ffffff;
+		border-radius: 6px;
+		box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 	}
 </style>
