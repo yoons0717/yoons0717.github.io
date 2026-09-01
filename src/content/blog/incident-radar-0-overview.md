@@ -53,7 +53,7 @@ seriesOrder: 0
 
 ## 전체 구성도
 
-![전체 구성도 — 모노레포(shared·frontend·backend), 로컬 인프라, CI, 외부 시뮬레이터·webhook](./images/0-architecture.svg)
+![전체 구성도 — 모노레포(shared·frontend·backend), 로컬 인프라, CI, 외부 시뮬레이터·webhook](./images/0-architecture.png)
 
 시뮬레이터, webhook 수신처, BullMQ 워커, CI는 목표 구성에 포함되어 있습니다. 다만 현재 시점에서는 아직 구현하지 않은 부분도 있으며, 이후 각 편에서 기능을 하나씩 채워 나갈 예정입니다.
 
