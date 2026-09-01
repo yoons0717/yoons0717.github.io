@@ -18,7 +18,7 @@ backend는 NestJS, frontend는 Next.js로 구성합니다. 둘 다 1편에서 �
 
 로컬 인프라는 Postgres와 Redis이고, `docker-compose`로 실행합니다.
 
-```text id="x7q2jw"
+```text
 apps/
   backend/    # NestJS. 지금은 GET /health 스텁 하나
   frontend/   # Next.js. 스캐폴드 확인용 페이지 하나
@@ -51,7 +51,7 @@ NestJS 앱은 모듈의 트리로 구성됩니다.
 
 ### main.ts — 부팅 순서
 
-```ts id="9ysn7w"
+```ts
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
@@ -75,7 +75,7 @@ async function bootstrap() {
 
 대신 애플리케이션 시작 시점에 `process.env`를 Zod 스키마로 한 번 검증하고, 검증에 실패하면 기동 자체를 중단하도록 했습니다.
 
-```ts id="cf3e5t"
+```ts
 // apps/backend/src/config/env.schema.ts
 
 export const envSchema = z.object({
@@ -109,7 +109,7 @@ export function validateEnv(raw: Record<string, unknown>): Env {
 
 이 함수를 `ConfigModule`에 넘깁니다.
 
-```ts id="jj0unh"
+```ts
 ConfigModule.forRoot({
   isGlobal: true,
   envFilePath: [".env", "../../.env"],
@@ -127,7 +127,7 @@ ConfigModule.forRoot({
 
 예를 들어 Redis 커넥션은 `onModuleDestroy`에서 `quit()`하도록 구성할 수 있습니다.
 
-```ts id="6q1a4n"
+```ts
 @Injectable()
 export class RedisService implements OnModuleDestroy {
   readonly client = new Redis(/* REDIS_URL */);
@@ -160,7 +160,7 @@ API 주소처럼 공개되어도 되는 값만 이 접두사로 두고, 시크�
 
 이 값은 클라이언트 번들에 포함되는 특성상 빌드 시점에 고정되므로, Docker 이미지를 빌드하는 방식이라면 build arg 등으로 값을 전달해야 합니다.
 
-```ts id="k6g2yh"
+```ts
 // apps/frontend/lib/config.ts
 
 export const API_URL =
@@ -173,11 +173,11 @@ Tailwind v4는 기본적인 설정 파일 없이도 사용할 수 있습니다.
 
 `globals.css`에 다음 한 줄을 추가하고, PostCSS 플러그인을 등록했습니다.
 
-```css id="t6d0zw"
+```css
 @import "tailwindcss";
 ```
 
-```js id="sngzi5"
+```js
 // apps/frontend/postcss.config.mjs
 
 export default {
@@ -195,7 +195,7 @@ shadcn/ui는 일반적인 컴포넌트 라이브러리처럼 패키지에서 컴
 
 모노레포 내부의 공유 패키지는 Next.js 빌드 과정에서 함께 트랜스파일하도록 지정했습니다.
 
-```ts id="5r0gkn"
+```ts
 // apps/frontend/next.config.ts
 
 const nextConfig: NextConfig = {
@@ -207,7 +207,7 @@ const nextConfig: NextConfig = {
 
 Postgres와 Redis는 `docker-compose.yml`로 실행합니다.
 
-```yaml id="r8plmz"
+```yaml
 services:
   postgres:
     image: postgres:16-alpine
@@ -254,7 +254,7 @@ volumes:
 
 * **docker CLI는 그대로** — colima는 Lima 기반의 VM에서 컨테이너 런타임을 실행하고, Docker CLI가 해당 환경을 사용할 수 있도록 연결합니다. 따라서 `docker`, `docker compose` 명령은 그대로 사용할 수 있고, 실제 컨테이너를 실행하는 VM만 colima가 제공합니다.
 
-```bash id="5q8bzo"
+```bash
 brew install colima docker docker-compose
 colima start
 docker compose up -d

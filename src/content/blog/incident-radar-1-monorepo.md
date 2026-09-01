@@ -39,6 +39,7 @@ seriesOrder: 1
 packages:
   - "apps/*"
   - "packages/*"
+  - "tools"
 ```
 
 이제 pnpm은 `apps/backend`, `apps/frontend`, `packages/shared`를 각각 `package.json`을 가진 독립 패키지로 인식합니다.

@@ -64,7 +64,8 @@ TypeORM의 `synchronize: true`는 앱이 부팅할 때마다 엔티티 클래스
 // apps/backend/src/app.module.ts
 
 TypeOrmModule.forRootAsync({
-  useFactory: (config) => ({
+  inject: [ConfigService],
+  useFactory: (config: ConfigService<Env, true>) => ({
     type: "postgres",
     url: config.get("DATABASE_URL", { infer: true }),
     entities,
@@ -184,7 +185,7 @@ export class CreateErrorLogs1735689600000 implements MigrationInterface {
 
 다만 생성 결과를 그대로 신뢰하지 않고, 생성된 파일을 직접 열어 예상하지 못한 `DROP`이나 위험한 변경이 포함되어 있지 않은지 확인합니다.
 
-## 개발 흐름
+## 스키마 변경 흐름
 
 스키마 변경은 다음 순서로 진행합니다.
 
@@ -220,7 +221,7 @@ docker compose exec postgres psql -U ir -d incident_radar -c 'SELECT name FROM m
 
 `\d error_logs`에는 컬럼 4개(`id`, `service`, `message`, `created_at`)와 인덱스 2개가 있고, `migrations` 테이블에는 한 행이 있습니다.
 
-![baseline: error\_logs 컬럼 4개와 migrations 테이블 1행](./3-baseline.png)
+![baseline: error\_logs 컬럼 4개와 migrations 테이블 1행](./images/3-baseline.png)
 
 ### 2. 엔티티에 컬럼 추가
 
@@ -229,7 +230,7 @@ docker compose exec postgres psql -U ir -d incident_radar -c 'SELECT name FROM m
 severity!: string | null;
 ```
 
-![ErrorLog 엔티티 맨 아래에 severity 컬럼을 추가한 코드](./3-entity-add-column.png)
+![ErrorLog 엔티티 맨 아래에 severity 컬럼을 추가한 코드](./images/3-entity-add-column.png)
 
 ### 3. migration:generate
 
@@ -239,7 +240,7 @@ severity!: string | null;
 
 생성된 SQL을 열어 예상하지 못한 `DROP`이나 데이터 유실 가능성이 있는 변경이 없는지 먼저 확인합니다.
 
-![생성된 AddSeverity 마이그레이션 파일: up은 ADD 컬럼, down은 DROP COLUMN](./3-generated-migration.png)
+![생성된 AddSeverity 마이그레이션 파일: up은 ADD 컬럼, down은 DROP COLUMN](./images/3-generated-migration.png)
 
 ### 4. migration:run
 
@@ -249,7 +250,7 @@ severity!: string | null;
 
 `migrations` 테이블에는 baseline인 `CreateErrorLogs`와 방금 실행한 `AddSeverity` 두 행이 남습니다.
 
-![migration 로그와 severity 컬럼이 추가된 error\_logs, migrations 2행](./3-migration-run.png)
+![migration 로그와 severity 컬럼이 추가된 error\_logs, migrations 2행](./images/3-migration-run.png)
 
 ### 5. migration:revert
 
@@ -259,7 +260,7 @@ severity!: string | null;
 
 이후 `\d error_logs`는 다시 컬럼 4개가 되고, `migrations` 테이블에는 `CreateErrorLogs` 한 행만 남습니다.
 
-![migration 로그와 severity가 사라진 error\_logs, migrations 1행](./3-migration-revert.png)
+![migration 로그와 severity가 사라진 error\_logs, migrations 1행](./images/3-migration-revert.png)
 
 ### 6. generate의 비교 대상
 
@@ -269,11 +270,11 @@ severity!: string | null;
 
 즉, `migration:generate`가 비교하는 대상은 **소스 코드의 엔티티와 현재 DB 스키마**입니다.
 
-![엔티티에 severity가 남아 있어 generate가 Tmp 마이그레이션을 다시 만들어 낸 로그](./3-generate-diff.png)
+![엔티티에 severity가 남아 있어 generate가 Tmp 마이그레이션을 다시 만들어 낸 로그](./images/3-generate-diff.png)
 
 ## 복합 인덱스 (service, created_at)
 
-이 서비스의 주요 조회는 "특정 서비스에서 최근 N초 동안 발생한 에러"입니다.
+이 서비스의 주요 조회는 "특정 서비스의 특정 시간 범위 에러"입니다. `GET /errors`(5편)가 이 형태이고, 이후 Redis 장애 시 DB로 개수를 세는 fallback도 같은 패턴입니다.
 
 이를 위해 `(service, created_at)` 복합 인덱스를 둡니다.
 
@@ -285,7 +286,8 @@ severity!: string | null;
 
 ```sql
 WHERE service = 'checkout'
-  AND created_at >= NOW() - INTERVAL '60 seconds'
+  AND created_at >= :from
+ORDER BY created_at DESC
 ```
 
 인덱스를 `(service, created_at)` 순서로 두면 먼저 특정 서비스의 범위를 좁힌 뒤 그 안에서 시간 범위를 탐색할 수 있습니다.
