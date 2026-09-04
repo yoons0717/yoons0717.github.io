@@ -132,7 +132,7 @@ async dispatch(data: AlertJobData): Promise<void> {
 }
 ```
 
-webhook 발송에 성공하면 `alerts` 테이블에 기록을 남깁니다.
+webhook 발송에 성공하면 `alerts` 테이블에 기록을 남깁니다. 이 테이블과 뒤에서 쓰는 `alert_failures`는 3편에서 정한 대로 마이그레이션으로 추가했습니다.
 
 반대로 모든 시도를 소진하면, 즉 총 5회 모두 실패하면 워커의 `failed` 이벤트 핸들러가 `alert_failures` 테이블에 발송하려던 내용과 마지막 에러, 시도 횟수를 기록합니다.
 

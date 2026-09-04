@@ -12,7 +12,7 @@ seriesOrder: 3
 
 ---
 
-2편에서 세운 TypeORM 연결 위에서 첫 테이블인 `error_logs`를 만들면서 정한 규칙을 정리합니다.
+2편에서 올린 Postgres와 검증된 env 위에 TypeORM을 연결하고, 첫 테이블인 `error_logs`를 만들면서 정한 규칙을 정리합니다.
 
 이 프로젝트에서는 개발 환경을 포함해 DB 스키마 변경을 `synchronize`에 맡기지 않고, 모두 마이그레이션 파일로 관리합니다.
 

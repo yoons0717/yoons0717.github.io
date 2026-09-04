@@ -42,6 +42,8 @@ async check(service: string): Promise<void> {
 
 현재 시각도 5편에서 주입 가능하게 만든 `Clock`을 통해 `this.clock.now()`로 가져옵니다.
 
+`ALERT_THRESHOLD`는 2편의 env 스키마에 더한 값이고, 부팅 시 Zod 검증을 함께 거칩니다. 이후 편에서 추가하는 알림 관련 환경변수도 같은 스키마에서 검증합니다.
+
 컨트롤러에서는 에러를 저장한 직후 `check()`를 호출합니다.
 
 ```ts

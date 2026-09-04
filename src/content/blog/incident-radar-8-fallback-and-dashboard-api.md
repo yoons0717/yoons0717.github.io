@@ -207,7 +207,7 @@ Redis가 다운되면 이 호출이 실패하는데, 대시보드 전체가 같�
 
 응답 요소는 `status`로 나뉘는 판별 유니온입니다. `dispatched`면 `count`·`threshold`·`windowMs`가, `failed`면 `attempts`·`error`가 채워집니다. `at`은 각각 `alerts.at`과 `alert_failures.failed_at`에서 가져옵니다.
 
-세 조회 API의 응답 스키마 `StatsResponse`·`ServiceStatus`·`Alert`는 공유 패키지에 정의했습니다. 프론트에서는 API 응답을 이 스키마로 다시 파싱한 뒤 화면에 사용합니다.
+`StatsResponse`·`ServiceStatus`는 이번에 공유 패키지에 새로 정의했고, `Alert`는 1편에서 정의한 판별 유니온을 그대로 씁니다. 프론트에서는 세 응답 모두 이 스키마로 다시 파싱한 뒤 화면에 사용합니다.
 
 `DashboardService`는 실제 테스트 DB로 세 메서드를 유닛 테스트 6개로 확인했습니다.
 
