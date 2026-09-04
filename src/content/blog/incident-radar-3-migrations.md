@@ -274,7 +274,7 @@ severity!: string | null;
 
 ## 복합 인덱스 (service, created_at)
 
-이 서비스의 주요 조회는 "특정 서비스의 특정 시간 범위 에러"입니다. `GET /errors`(5편)가 이 형태이고, 이후 Redis 장애 시 DB로 개수를 세는 fallback도 같은 패턴입니다.
+이 서비스의 주요 조회는 "특정 서비스의 특정 시간 범위 에러"입니다. 이후 편에서 만드는 `GET /errors`가 이 형태이고, Redis 장애 시 DB로 개수를 세는 fallback도 같은 패턴입니다.
 
 이를 위해 `(service, created_at)` 복합 인덱스를 둡니다.
 

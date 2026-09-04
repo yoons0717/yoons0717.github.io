@@ -12,7 +12,7 @@ seriesOrder: 6
 
 그리고 이 감지 경로를 반복해서 실행해볼 수 있도록 `tools/`에 트래픽 시뮬레이터도 추가합니다.
 
-이번 편에서는 임계값을 감지하고 로그를 남기는 데까지 구현합니다. 실제 알림을 보내는 cooldown, 큐, webhook은 다음 편에서 다룹니다.
+이번 편에서는 임계값을 감지하고 로그를 남기는 데까지 구현합니다. 실제 알림을 보내는 cooldown, 큐, webhook은 이후 편에서 다룹니다.
 
 ## DetectorService
 
@@ -60,7 +60,7 @@ async create(@Body(new ZodValidationPipe(ErrorLogInput)) body: ErrorLogInput) {
 
 에러 저장 자체는 이미 완료된 상태입니다.
 
-감지 실패가 API 요청까지 실패시키지 않도록 분리하는 처리는 다음 편에서 다룹니다.
+감지 실패가 API 요청까지 실패시키지 않도록 분리하는 처리는 이후 편에서 다룹니다.
 
 이 로직은 가짜 카운터와 `Clock`으로 유닛 테스트 3개로 확인했습니다.
 

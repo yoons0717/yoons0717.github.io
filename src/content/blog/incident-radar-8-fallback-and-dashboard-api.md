@@ -74,7 +74,7 @@ record(service: string, at: number): Promise<number> {
 }
 ```
 
-이름은 `record`지만 DB 구현에서는 별도의 쓰기를 하지 않습니다. 에러 로그는 이미 `ErrorsService`가 저장했기 때문에, 해당 서비스의 최근 윈도우 안 행만 `COUNT`합니다. 경계값을 제외하는 규칙도 Redis 슬라이딩 윈도우 구현과 동일하게 맞췄습니다. Redis보다 매 요청마다 DB 쿼리가 하나 더 발생하지만, Redis가 없어도 감지를 계속하기 위해 이 비용을 감수합니다.
+이름은 `record`지만 DB 구현에서는 별도의 쓰기를 하지 않습니다. 에러 로그는 이미 `ErrorsService`가 저장했기 때문에, 해당 서비스의 최근 윈도우 안 행만 `COUNT`합니다. 이 조회는 3편에서 `error_logs`에 둔 `(service, created_at)` 복합 인덱스가 그대로 받습니다. 경계값을 제외하는 규칙도 Redis 슬라이딩 윈도우 구현과 동일하게 맞췄습니다. Redis보다 매 요청마다 DB 쿼리가 하나 더 발생하지만, Redis가 없어도 감지를 계속하기 위해 이 비용을 감수합니다.
 
 `CounterSelector`는 직접 카운트하지 않습니다. `record()`가 호출될 때마다 현재 `healthy` 값을 확인하고 Redis 또는 DB 카운터 중 하나로 요청을 위임합니다.
 
@@ -127,7 +127,7 @@ this.logger.log(
 * `healthy` 값에 따라 Redis 또는 DB 카운터로 위임한다
 * 호출 시점의 상태에 따라 매번 경로를 다시 선택한다
 
-fallback 경로 전체는 e2e 테스트로 확인했습니다. `RedisHealthService`를 `healthy=false`로 오버라이드한 뒤 `POST /errors`를 15회 보내면, 모든 요청이 201로 응답하고 `error_logs`에 15행이 저장되며 `alerts` 테이블에는 행이 추가되지 않습니다. 실제 Redis 프로세스를 종료하는 방식은 CI 환경에서 불안정할 수 있어 이 방식으로 대체했습니다.
+fallback 경로 전체는 e2e 테스트로 확인했습니다. `RedisHealthService`를 `healthy=false`로 오버라이드한 뒤 `POST /errors`를 15회 보내면, 모든 요청이 201로 응답하고 `error_logs`에 15행이 저장되며 `alerts` 테이블에는 행이 추가되지 않습니다. 실제 Redis 프로세스를 종료하는 방식은 이후 CI에서 불안정할 수 있어 이 방식으로 대체했습니다.
 
 로컬에서는 dev 스택을 실행한 상태로 `docker compose stop redis`를 실행했습니다. 시뮬레이터를 계속 실행하면 `POST /errors`는 여전히 201로 응답하고, 백엔드 로그의 `path`가 `db-fallback`으로 바뀌며 임계값을 넘긴 요청에는 `alert suppressed` 로그가 남습니다. `docker compose start redis` 이후 5초 안에 `path`가 다시 `redis`로 돌아옵니다.
 

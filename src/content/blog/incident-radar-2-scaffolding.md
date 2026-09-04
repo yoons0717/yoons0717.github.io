@@ -260,7 +260,7 @@ colima start
 docker compose up -d
 ```
 
-CI에서도 Docker service container로 Postgres와 Redis를 실행합니다.
+CI에서도 Docker service container로 Postgres와 Redis를 실행할 계획입니다.
 
 로컬과 CI 모두 컨테이너 기반으로 인프라를 구성하면, 적어도 DB와 Redis를 실행하는 방식은 같은 형태로 맞출 수 있습니다.
 
