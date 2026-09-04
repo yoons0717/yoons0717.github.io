@@ -42,14 +42,22 @@ seriesOrder: 0
 
 개발 과정에서 일부 기술 스택은 변경될 수 있습니다.
 
-| 영역     | 스택                                                                                   |
-| ------ | ------------------------------------------------------------------------------------ |
-| 모노레포   | pnpm workspace + Turborepo                                                           |
-| 백엔드    | NestJS · TypeORM · BullMQ · ioredis · Zod                                            |
-| 프론트    | Next.js (App Router) · Tailwind v4 · shadcn/ui · TanStack Query · Zustand · Recharts |
-| 인프라    | PostgreSQL 16 · Redis 7 · Docker Compose (맥은 colima)                                 |
-| 테스트·CI | Jest · supertest · GitHub Actions                                                    |
-| 공유     | `packages/shared` — Zod 스키마와 타입을 백엔드·프론트엔드에서 함께 import                               |
+| 영역 | 기술 | 선택 이유 |
+| --- | --- | --- |
+| Monorepo | pnpm workspace · Turborepo | 백엔드·프론트·공유 패키지를 한 저장소에서 관리 |
+| Backend | NestJS | 에러 수집·감지·알림·조회를 모듈 단위로 분리 |
+| Database | PostgreSQL · TypeORM | 에러 이벤트와 알림 이력의 영속 저장 |
+| Realtime / Cache | Redis · ioredis | Sliding Window 집계 + Cooldown 상태 관리 |
+| Queue | BullMQ | 에러 수집과 webhook 알림을 비동기로 분리 |
+| Validation | Zod | API 경계의 런타임 검증 + Backend/Frontend 스키마 공유 |
+| Frontend | Next.js · Tailwind CSS · shadcn/ui | 설정 최소화로 대시보드 UI 구성 |
+| Server State | TanStack Query | API 캐싱 + 5초 Polling |
+| UI State | Zustand | 서버 데이터와 화면 상태 분리 |
+| Chart | Recharts | 에러 추이 데이터를 간단하게 시각화 |
+| Infra | Docker Compose | PostgreSQL + Redis 로컬 환경 통일 (맥은 colima) |
+| Test | Jest · Supertest | 핵심 로직과 API 동작 검증 |
+| CI | GitHub Actions | 커밋마다 테스트·빌드 자동 검증 |
+| Shared | packages/shared | 요청·응답 스키마를 한 곳에 모아 Backend ↔ Frontend 정의 어긋남 방지 |
 
 ## 전체 구성도
 
