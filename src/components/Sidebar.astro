@@ -9,91 +9,72 @@ const { active } = Astro.props;
 const projects = await getProjects();
 ---
 
-<aside class="sidebar">
-	<details open>
-		<summary>프로젝트</summary>
-		<nav>
-			<a href="/blog" class:list={['all', { active: !active }]}>전체 글</a>
-			<ul>
-				{
-					projects.map((p) => (
-						<li>
-							<a href={`/blog/${p.slug}/`} class:list={{ active: p.slug === active }}>
-								<span class="name">{p.slug.replace(/-/g, ' ')}</span>
-								<span class="count">{p.count}</span>
-							</a>
-						</li>
-					))
-				}
-			</ul>
-		</nav>
-	</details>
-</aside>
+<nav class="sidebar" aria-label="프로젝트">
+	<div class="label">PROJECTS</div>
+	<ul>
+		<li>
+			<a href="/blog" aria-current={active ? undefined : 'page'}>
+				<span class="name">전체 글</span>
+			</a>
+		</li>
+		{
+			projects.map((p) => (
+				<li>
+					<a href={`/blog/${p.slug}/`} aria-current={p.slug === active ? 'page' : undefined}>
+						<span class="name">{p.slug.replace(/-/g, ' ')}</span>
+						<span class="count">{p.count}</span>
+					</a>
+				</li>
+			))
+		}
+	</ul>
+</nav>
 
 <style>
-	.sidebar {
-		font-size: 0.92em;
-	}
-	details {
-		border: 1px solid var(--border);
-		border-radius: 6px;
-		padding: 0.4em 0.8em;
-	}
-	summary {
-		cursor: pointer;
+	.label {
+		font-size: 0.68rem;
+		letter-spacing: 0.16em;
 		color: var(--text-muted);
-		font-size: 0.82em;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		padding: 0.3em 0;
-		list-style: none;
-	}
-	summary::-webkit-details-marker {
-		display: none;
-	}
-	nav {
-		margin-top: 0.4em;
-	}
-	.all {
-		display: block;
-		padding: 0.35em 0;
-		color: var(--text-muted);
+		margin-bottom: 0.85rem;
 	}
 	ul {
 		list-style: none;
-		margin: 0.3em 0 0;
-		padding: 0.3em 0 0;
-		border-top: 1px solid var(--border);
+		margin: 0;
+		padding: 0;
 	}
 	li a {
 		display: flex;
 		justify-content: space-between;
-		gap: 0.6em;
-		padding: 0.35em 0;
+		gap: 0.6rem;
+		padding: 0.32rem 0 0.32rem 0.7rem;
+		border-left: 2px solid transparent;
 		color: var(--text-muted);
+		font-size: 0.88rem;
 	}
 	.name {
 		text-transform: capitalize;
 	}
-	.count {
-		color: var(--text-muted);
-		font-size: 0.85em;
-		font-variant-numeric: tabular-nums;
-	}
-	a:hover {
+	li a:hover {
 		color: var(--accent);
 		text-decoration: none;
 	}
-	a.active {
+	li a[aria-current] {
+		border-left-color: var(--accent);
 		color: var(--heading);
 		font-weight: 700;
 	}
+	.count {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		font-weight: 400;
+		font-variant-numeric: tabular-nums;
+	}
+
 	@media (max-width: 860px) {
 		.sidebar {
 			margin-bottom: 2em;
-		}
-		details:not([open]) {
-			padding-bottom: 0.4em;
+			padding-bottom: 1.2em;
+			border-bottom: 1px solid var(--border);
 		}
 	}
 </style>
