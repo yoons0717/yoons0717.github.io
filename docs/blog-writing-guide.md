@@ -29,6 +29,8 @@ seriesOrder: N
 
 키 사이 빈 줄 금지(에디터가 넣으면 지운다). `seriesOrder` 있어야 이전/다음·정렬에 들어감.
 
+`project`는 글이 속한 프로젝트(사이드바 카테고리 기준). 기본값 `incident-radar`라 이 시리즈 글은 안 적어도 된다. 다른 프로젝트 글을 처음 쓸 때 `project: 슬러그` 를 `seriesOrder`처럼 손으로 추가한다. `seriesOrder`는 그 프로젝트 안에서의 순서다.
+
 ## 2. 구조
 
 ```
@@ -94,9 +96,10 @@ AI스러운 티 제거:
 
 ## 6. 자동으로 붙는 것 (신경 안 써도 됨)
 
-- 이전/다음 링크: `seriesOrder` 기준, `BlogPost.astro` 하단.
+- 이전/다음 링크: 같은 `project` 안에서 `seriesOrder` 기준, `BlogPost.astro` 하단.
 - 상단 목차: `##` 3개 이상이면 자동.
-- 목록 정렬: 같은 `pubDate`면 `seriesOrder` 역순(최신 위).
+- 목록 정렬: 같은 `pubDate`면 `project`별로 묶고 그 안에서 `seriesOrder` 역순(최신 위).
+- 사이드바 프로젝트 메뉴: `/blog`·`/blog/<project>` 에 자동. `project` 값만 맞으면 목록에 뜬다.
 - 본문 이미지 클릭 → 전체화면 확대 (오버레이/`Esc`로 닫기).
 
 ## 7. 작업 순서 · 리뷰
