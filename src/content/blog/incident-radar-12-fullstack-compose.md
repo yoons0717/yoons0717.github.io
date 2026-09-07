@@ -1,9 +1,9 @@
 ---
-title: "[Incident Radar 13] docker-compose 풀스택 구성"
+title: "[Incident Radar 12] docker-compose 풀스택 구성"
 description: backend/frontend까지 컨테이너로 옮겨서 docker compose up 하나로 전체 스택이 뜨게 만듭니다.
 pubDate: 2026-09-07
 tags: [개발]
-seriesOrder: 13
+seriesOrder: 12
 ---
 
 지금까지 `docker-compose.yml`은 postgres·redis만 관리했고, backend·frontend는 로컬에서 `pnpm dev`로 직접 실행했습니다.
@@ -116,4 +116,4 @@ redis      Up 2 days (healthy)   0.0.0.0:6379->6379/tcp
 
 그다음 호스트에서 `simulator --spike checkout`으로 트래픽을 흘렸습니다. checkout 임계값 초과 알림이 dispatched로 기록되고, cooldown이 걸리고, 차트에 스파이크가 반영되는 것까지 대시보드에서 확인했습니다.
 
-![Incident Radar 대시보드 — checkout 서비스 알림 dispatched, cooldown 진행 중, 에러 추이 차트에 스파이크 반영](./images/13-dashboard.png)
+![Incident Radar 대시보드 — checkout 서비스 알림 dispatched, cooldown 진행 중, 에러 추이 차트에 스파이크 반영](./images/12-dashboard.png)
