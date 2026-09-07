@@ -4,11 +4,11 @@ import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
 	const posts = await getCollection('blog');
-	const series = posts
-		.filter((p) => p.data.seriesOrder !== undefined)
-		.sort((a, b) => a.data.seriesOrder! - b.data.seriesOrder!);
 
 	return posts.map((post) => {
+		const series = posts
+			.filter((p) => p.data.project === post.data.project && p.data.seriesOrder !== undefined)
+			.sort((a, b) => a.data.seriesOrder! - b.data.seriesOrder!);
 		const i = series.findIndex((p) => p.id === post.id);
 		return {
 			params: { slug: post.id },

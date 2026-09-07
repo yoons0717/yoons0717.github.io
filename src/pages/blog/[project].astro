@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import PostList from '../../components/PostList.astro';
+import { getProjects, getProjectPosts } from '../../lib/posts';
+
+export async function getStaticPaths() {
+	const projects = await getProjects();
+	return projects.map((p) => ({ params: { project: p.slug } }));
+}
+
+const { project } = Astro.params;
+const posts = await getProjectPosts(project!);
+const name = project!.replace(/-/g, ' ');
+---
+
+<Layout title={name}>
+	<Sidebar slot="sidebar" active={project} />
+	<h1>{name}</h1>
+	<PostList posts={posts} />
+</Layout>
+
+<style>
+	h1 {
+		text-transform: capitalize;
+	}
+</style>

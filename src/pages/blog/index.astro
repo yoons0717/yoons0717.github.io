@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Sidebar from '../../components/Sidebar.astro';
 import PostList from '../../components/PostList.astro';
 import { getSortedPosts } from '../../lib/posts';
 
@@ -7,6 +8,7 @@ const posts = await getSortedPosts();
 ---
 
 <Layout title="글">
+	<Sidebar slot="sidebar" />
 	<h1>글 목록</h1>
 	<PostList posts={posts} />
 </Layout>
