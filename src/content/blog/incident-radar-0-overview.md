@@ -54,7 +54,7 @@ seriesOrder: 0
 | Server State | TanStack Query | API 캐싱 + 5초 Polling |
 | UI State | Zustand | 서버 데이터와 화면 상태 분리 |
 | Chart | Recharts | 에러 추이 데이터를 간단하게 시각화 |
-| Infra | Docker Compose | PostgreSQL + Redis 로컬 환경 통일 (맥은 colima) |
+| Infra | Docker Compose | PostgreSQL·Redis·Backend·Frontend 로컬 풀스택 통일 (맥은 colima) |
 | Test | Jest · Supertest | 핵심 로직과 API 동작 검증 |
 | CI | GitHub Actions | 커밋마다 테스트·빌드 자동 검증 |
 | Shared | packages/shared | 요청·응답 스키마를 한 곳에 모아 Backend ↔ Frontend 정의 어긋남 방지 |
