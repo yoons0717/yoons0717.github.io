@@ -31,6 +31,15 @@ seriesOrder: N
 
 `project`는 글이 속한 프로젝트(사이드바 카테고리 기준). 기본값 `incident-radar`라 이 시리즈 글은 안 적어도 된다. 다른 프로젝트 글을 처음 쓸 때 `project: 슬러그` 를 `seriesOrder`처럼 손으로 추가한다. `seriesOrder`는 그 프로젝트 안에서의 순서다.
 
+### 개념 정리 시리즈 (`project: backend`)
+
+개발기와 별개로, 처음이라 헷갈리는 백엔드 개념(Redis란, PostgreSQL이란 …)을 정리하는 시리즈. 편 목록·순서는 `backend-concept-posts.md`.
+
+- 파일명 `backend-N-topic.md`, `project: backend`, `seriesOrder`는 그 계획 문서의 순서.
+- `tags`는 `[개발]` 대신 소분류 하나: `데이터베이스` / `캐시·큐` / `네트워크·API` / `런타임` / `인프라` / `관측성` / `보안` / `테스트`.
+- **0번 대전제(그 시점 커밋된 코드만) 적용 안 함.** 대신 규칙 하나: 각 편은 일반 설명 후 반드시 Incident Radar의 실제 코드·설정 한 조각으로 착지한다. 앵커가 없으면 그 편은 쓰지 않는다.
+- 말투·구조·간결성 규칙(2~4장)은 그대로.
+
 ## 2. 구조
 
 ```
