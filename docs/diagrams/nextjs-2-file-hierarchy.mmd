@@ -1,0 +1,15 @@
+flowchart TB
+  subgraph L["layout.tsx"]
+    subgraph E["error.tsx (오류 경계)"]
+      subgraph LO["loading.tsx (Suspense 경계)"]
+        subgraph NF["not-found.tsx (404 경계)"]
+          P["page.tsx"]
+        end
+      end
+    end
+  end
+  style L fill:#e8f0fe,stroke:#4a6fd8,color:#1f3a8a
+  style E fill:#fbeaea,stroke:#c0392b,color:#7a2318
+  style LO fill:#fdf0e1,stroke:#d9822b,color:#7a4510
+  style NF fill:#f4f4f4,stroke:#999,color:#555
+  style P fill:#fff,stroke:#333,color:#222

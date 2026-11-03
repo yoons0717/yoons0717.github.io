@@ -1,0 +1,12 @@
+flowchart LR
+  Req["요청"] --> M{"matcher에<br/>맞나?"}
+  M -- "예" --> P["proxy.ts"]
+  M -- "아니오" --> RT
+  P -- "redirect · rewrite" --> Out["바로 응답<br/>(예: 307 → /blog)"]
+  P -- "NextResponse.next()<br/>헤더 추가" --> RT{"주소에 맞는 파일"}
+  RT --> PG["page.tsx<br/>화면"]
+  RT --> RH["route.ts<br/>JSON 등 HTTP 응답"]
+  classDef proxy fill:#fdf0e1,stroke:#d9822b,color:#7a4510
+  classDef end1 fill:#e8f0fe,stroke:#4a6fd8,color:#1f3a8a
+  class P proxy
+  class PG,RH end1

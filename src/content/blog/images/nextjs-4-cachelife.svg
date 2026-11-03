@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 270" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="13">
+<rect width="760" height="270" fill="#fff"/>
+<text x="20" y="28" font-size="15" font-weight="600" fill="#222">cacheLife의 세 시간 (결과를 만든 시점부터, 개념도)</text>
+<text x="20" y="70" font-weight="600" fill="#333">브라우저</text>
+<rect x="120" y="80" width="150" height="26" fill="#e8f4ec"/><text x="195" y="98" text-anchor="middle" fill="#1d5c3f">stale: 서버에 묻지 않음</text>
+<rect x="270" y="80" width="470" height="26" fill="#f4f4f4"/><text x="505" y="98" text-anchor="middle" fill="#666">이동할 때 서버에 다시 물어봄</text>
+<text x="20" y="150" font-weight="600" fill="#333">서버</text>
+<rect x="120" y="160" width="250" height="26" fill="#e8f0fe"/><text x="245" y="178" text-anchor="middle" fill="#1f3a8a">저장된 결과를 그대로 줌</text>
+<rect x="370" y="160" width="250" height="26" fill="#fdf0e1"/><text x="495" y="178" text-anchor="middle" fill="#7a4510">기존 결과를 주고 백그라운드에서 새로 만듦</text>
+<rect x="620" y="160" width="120" height="26" fill="#fbeaea"/><text x="680" y="178" text-anchor="middle" fill="#7a2318">새 결과를 기다림</text>
+<line x1="120" y1="210" x2="750" y2="210" stroke="#888"/>
+<line x1="120" y1="70" x2="120" y2="214" stroke="#999" stroke-dasharray="3 3"/>
+<text x="120" y="230" text-anchor="middle" font-size="12" fill="#444">결과 만듦</text>
+<line x1="270" y1="70" x2="270" y2="214" stroke="#999" stroke-dasharray="3 3"/>
+<text x="270" y="230" text-anchor="middle" font-size="12" fill="#444">stale</text>
+<line x1="370" y1="70" x2="370" y2="214" stroke="#999" stroke-dasharray="3 3"/>
+<text x="370" y="230" text-anchor="middle" font-size="12" fill="#444">revalidate</text>
+<line x1="620" y1="70" x2="620" y2="214" stroke="#999" stroke-dasharray="3 3"/>
+<text x="620" y="230" text-anchor="middle" font-size="12" fill="#444">expire</text>
+<text x="20" y="258" font-size="12" fill="#666">expire는 요청이 없는 채로 지난 시간 기준. 예: hours 프로필은 stale 5분, revalidate 1시간, expire 1일.</text>
+</svg>

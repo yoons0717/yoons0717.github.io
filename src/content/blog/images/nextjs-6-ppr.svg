@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="13">
+<rect width="760" height="330" fill="#fff"/>
+<text x="20" y="28" font-size="15" font-weight="600" fill="#222">부분 사전 렌더링된 페이지 하나</text>
+<rect x="20" y="48" width="420" height="250" fill="#fafafa" stroke="#bbb"/>
+<text x="32" y="68" font-size="12" fill="#666">ProductPage · 빌드 때 만든 정적 셸</text>
+<rect x="40" y="82" width="380" height="44" fill="#e8f0fe" stroke="#4a6fd8"/><text x="230" y="102" text-anchor="middle" fill="#1f3a8a">Header</text><text x="230" y="118" text-anchor="middle" font-size="12" fill="#1f3a8a">정적: 빌드 때 그림</text>
+<rect x="40" y="138" width="380" height="64" fill="#e8f0fe" stroke="#4a6fd8"/><text x="230" y="166" text-anchor="middle" fill="#1f3a8a">ProductList</text><text x="230" y="184" text-anchor="middle" font-size="12" fill="#1f3a8a">'use cache': 빌드 때 그림, cacheLife에 따라 다시 만듦</text>
+<rect x="40" y="214" width="380" height="64" fill="#f4f4f4" stroke="#999" stroke-dasharray="5 4"/><text x="230" y="242" text-anchor="middle" fill="#555">장바구니 확인 중</text><text x="230" y="260" text-anchor="middle" font-size="12" fill="#666">&lt;Suspense&gt; fallback 자리</text>
+<rect x="520" y="214" width="220" height="64" fill="#fdf0e1" stroke="#d9822b"/><text x="630" y="242" text-anchor="middle" fill="#7a4510">Cart</text><text x="630" y="260" text-anchor="middle" font-size="12" fill="#7a4510">cookies() 읽음: 요청 때 그림</text>
+<line x1="520" y1="246" x2="428" y2="246" stroke="#d9822b" stroke-width="2"/><polygon points="428,240 418,246 428,252" fill="#d9822b"/>
+<text x="474" y="236" text-anchor="middle" font-size="12" fill="#7a4510">채움</text>
+<text x="20" y="318" font-size="12" fill="#666">요청이 오면 정적 셸을 바로 보내고, Cart를 그린 결과를 같은 응답의 다음 조각으로 보내 fallback 자리를 바꿈.</text>
+</svg>

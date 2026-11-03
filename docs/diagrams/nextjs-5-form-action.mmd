@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant B as 브라우저
+  participant S as Next.js 서버
+  participant D as DB
+  B->>S: GET /todos
+  S-->>B: HTML (form에 숨은 input $ACTION_ID_407d…)
+  Note over B: 사용자가 입력 후 제출
+  B->>S: POST /todos<br/>$ACTION_ID_407d… + title=buy-milk
+  Note over S: ID에 맞는 서버 함수 addTodo 실행
+  S->>D: 할 일 저장
+  D-->>S: 완료
+  Note over S: revalidatePath('/todos')<br/>→ 새 목록으로 다시 그림
+  S-->>B: 갱신된 화면 (같은 응답)

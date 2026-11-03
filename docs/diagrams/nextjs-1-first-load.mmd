@@ -1,0 +1,26 @@
+sequenceDiagram
+  participant B as 브라우저
+  participant S as 서버
+  participant D as DB·API
+  rect rgb(250,235,235)
+  Note over B,D: 브라우저에서만 그릴 때
+  B->>S: 페이지 요청
+  S-->>B: 빈 HTML + JS 번들 전체
+  Note over B: JS 실행 → 빈 화면 그림
+  B->>S: 데이터 요청 (/api/posts)
+  S->>D: 조회
+  D-->>S: 결과
+  S-->>B: JSON
+  Note over B: 데이터로 다시 그림 → 화면 완성
+  end
+  rect rgb(232,244,236)
+  Note over B,D: 서버 컴포넌트
+  B->>S: 페이지 요청
+  S->>D: 서버 컴포넌트가 조회
+  D-->>S: 결과
+  Note over S: 서버 컴포넌트 실행 → RSC 페이로드<br/>RSC 페이로드 + 클라이언트 컴포넌트 → HTML
+  S-->>B: 내용이 채워진 HTML + RSC 페이로드
+  Note over B: HTML 바로 표시
+  S-->>B: 클라이언트 컴포넌트 JS만
+  Note over B: 하이드레이션 → 버튼 동작
+  end

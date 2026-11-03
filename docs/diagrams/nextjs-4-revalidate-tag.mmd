@@ -1,0 +1,16 @@
+sequenceDiagram
+  participant C as 클라이언트
+  participant S as Next.js 서버
+  participant K as 캐시 (tag: stamp)
+  Note over K: 빌드 때 저장된 값 CACHED_…546
+  C->>S: POST /api/revalidate
+  S->>K: revalidateTag('stamp', 'max')
+  Note over K: 오래된 상태로 표시 (아직 지우지 않음)
+  S-->>C: { revalidated: true }
+  C->>S: GET /cache (첫 요청)
+  K-->>S: 이전 값 CACHED_…546
+  S-->>C: CACHED_…546
+  Note over K: 백그라운드에서 새로 만듦<br/>→ CACHED_…743
+  C->>S: GET /cache (다음 요청)
+  K-->>S: 새 값 CACHED_…743
+  S-->>C: CACHED_…743

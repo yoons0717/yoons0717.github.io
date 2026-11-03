@@ -1,0 +1,14 @@
+flowchart TB
+  Page["Page (page.tsx)"] --> Header["Header"]
+  Page --> Search["Search<br/>'use client'"]
+  Search --> Input["SearchInput<br/>Search가 import → 클라이언트"]
+  Page --> PanelBox
+  subgraph PanelBox["Panel ('use client')"]
+    Cart["Cart<br/>Page가 children으로 넘김 → 서버"]
+  end
+  LS["서버 컴포넌트 · 번들에 없음"] ~~~ LC["클라이언트 컴포넌트 · 번들에 포함"]
+  classDef server fill:#e8f0fe,stroke:#4a6fd8,color:#1f3a8a
+  classDef client fill:#fdf0e1,stroke:#d9822b,color:#7a4510
+  class Page,Header,Cart,LS server
+  class Search,Input,LC client
+  style PanelBox fill:#fdf0e1,stroke:#d9822b,color:#7a4510

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 290" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="13">
+<rect width="760" height="290" fill="#fff"/>
+<text x="20" y="28" font-size="15" font-weight="600" fill="#222">2초 걸리는 컴포넌트가 있는 페이지, 응답이 도착하는 시점 (실측)</text>
+<text x="20" y="74" font-weight="600" fill="#333">Suspense 없음</text>
+<rect x="230" y="56" width="456" height="26" fill="#eeeeee"/><text x="458" y="74" text-anchor="middle" fill="#777">아무것도 받지 못함 (서버가 기다리는 중)</text>
+<line x1="686" y1="52" x2="686" y2="86" stroke="#c0392b" stroke-width="2"/>
+<text x="680" y="104" text-anchor="end" fill="#c0392b">2072ms 제목 + 내용이 한 번에 도착</text>
+<text x="20" y="150" font-weight="600" fill="#333">Suspense로 감쌈</text>
+<rect x="239" y="132" width="442" height="26" fill="#e8f4ec"/><text x="461" y="150" text-anchor="middle" fill="#1d5c3f">제목 + fallback이 화면에 보이는 중</text>
+<line x1="239" y1="128" x2="239" y2="162" stroke="#2e9e6b" stroke-width="2"/>
+<line x1="682" y1="128" x2="682" y2="162" stroke="#2e9e6b" stroke-width="2"/>
+<text x="245" y="182" fill="#2e7d4f">43ms 첫 조각: 제목 + fallback</text>
+<text x="676" y="182" text-anchor="end" fill="#2e7d4f">2053ms 다음 조각: 실제 내용</text>
+<line x1="230" y1="218" x2="692" y2="218" stroke="#888"/>
+<g font-size="12" fill="#666" text-anchor="middle"><text x="230" y="236">0ms</text><text x="340" y="236">500ms</text><text x="450" y="236">1000ms</text><text x="560" y="236">1500ms</text><text x="670" y="236">2000ms</text></g>
+<text x="20" y="270" font-size="12" fill="#666">next start(16.4.4)로 실행하고, 응답 본문 조각이 도착한 시각을 기록. Suspense 없는 쪽은 export const instant = false 로 기다림을 허용한 페이지.</text>
+</svg>
