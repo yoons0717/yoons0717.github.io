@@ -1,0 +1,18 @@
+flowchart LR
+  subgraph IN["작업의 입력"]
+    direction TB
+    F["패키지 파일 내용"]
+    C["turbo.json 작업 설정"]
+    P["의존 작업의 해시"]
+    L["잠금 파일의 외부 의존성"]
+    E["env에 적은 환경 변수"]
+  end
+  IN --> H["해시 계산<br/>0e5105c3fe0329b0"]
+  H --> Q{"같은 해시의<br/>캐시가 있나?"}
+  Q -- "있음 (cache hit)" --> R["실행하지 않음<br/>로그 + outputs 파일 복원"]
+  Q -- "없음 (cache miss)" --> X["스크립트 실행"]
+  X --> S["로그 + outputs 파일을<br/>해시 이름으로 저장"]
+  classDef hit fill:#e8f4ec,stroke:#2e9e6b,color:#1d5c3f
+  classDef miss fill:#fbeaea,stroke:#c0392b,color:#7a2318
+  class R hit
+  class X,S miss

@@ -1,0 +1,14 @@
+flowchart LR
+  N["캐시에 없음"] -- "처음 쓸 때 요청<br/>(isPending)" --> F["신선함<br/>fresh"]
+  F -- "staleTime 지남<br/>(기본 0)" --> S["오래됨<br/>stale"]
+  S -- "마운트 · 창 포커스 · 재연결<br/>기존 데이터를 보여주며 다시 요청" --> F
+  F -- "쓰는 컴포넌트가<br/>모두 사라짐" --> I["비활성<br/>inactive"]
+  S -- "쓰는 컴포넌트가<br/>모두 사라짐" --> I
+  I -- "gcTime 전에 다시 씀<br/>남은 데이터 바로 표시" --> S
+  I -- "gcTime 지남<br/>(기본 5분)" --> X["캐시에서 삭제"]
+  classDef fresh fill:#e8f4ec,stroke:#2e9e6b,color:#1d5c3f
+  classDef stale fill:#fdf0e1,stroke:#d9822b,color:#7a4510
+  classDef gone fill:#f4f4f4,stroke:#999,color:#555
+  class F fresh
+  class S stale
+  class I,X,N gone

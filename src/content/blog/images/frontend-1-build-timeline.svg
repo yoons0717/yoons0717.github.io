@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 300" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="13">
+<rect width="760" height="300" fill="#fff"/>
+<text x="20" y="28" font-size="15" font-weight="600" fill="#222">패키지 세 개 빌드: @repo/ui → web, docs (web·docs는 각각 약 1초)</text>
+<text x="20" y="72" font-weight="600" fill="#333">하나씩 차례로</text>
+<rect x="170" y="56" width="23" height="24" fill="#8a8f98"/><text x="179" y="51" font-size="12" fill="#555">ui</text>
+<rect x="193" y="56" width="253" height="24" fill="#5b6cff"/><text x="320" y="73" text-anchor="middle" fill="#fff">web</text>
+<rect x="446" y="56" width="255" height="24" fill="#2e9e6b"/><text x="574" y="73" text-anchor="middle" fill="#fff">docs</text>
+<text x="701" y="102" text-anchor="end" fill="#c0392b">합계 약 2.3초</text>
+<text x="20" y="146" font-weight="600" fill="#333">turbo run build</text>
+<rect x="175" y="130" width="23" height="24" fill="#8a8f98"/><text x="184" y="125" font-size="12" fill="#555">ui</text>
+<rect x="198" y="130" width="255" height="24" fill="#5b6cff"/><text x="325" y="147" text-anchor="middle" fill="#fff">web</text>
+<rect x="198" y="160" width="255" height="24" fill="#2e9e6b"/><text x="325" y="177" text-anchor="middle" fill="#fff">docs</text>
+<text x="461" y="177" fill="#2e7d4f">합계 약 1.2초 (web·docs 동시 실행)</text>
+<line x1="170" y1="218" x2="740" y2="218" stroke="#888"/>
+<g font-size="12" fill="#666" text-anchor="middle"><text x="170" y="236">0초</text><text x="285" y="236">0.5초</text><text x="400" y="236">1초</text><text x="515" y="236">1.5초</text><text x="630" y="236">2초</text></g>
+<text x="20" y="276" font-size="12" fill="#666">하나씩: pnpm -r --workspace-concurrency=1 run build 로 측정한 전체 시간. turbo: --summarize 기록의 작업별 시작·끝 시각.</text>
+</svg>

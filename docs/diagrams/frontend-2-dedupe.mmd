@@ -1,0 +1,17 @@
+flowchart TB
+  subgraph E["useEffect로 직접 요청"]
+    direction LR
+    E1["Header<br/>(사용자 1)"] --> R1["GET /api/users/1"]
+    E2["Profile<br/>(사용자 1)"] --> R2["GET /api/users/1"]
+  end
+  subgraph Q["useQuery"]
+    direction LR
+    Q1["Header<br/>queryKey: ['user', 1]"] --> K[("캐시<br/>['user', 1]")]
+    Q2["Profile<br/>queryKey: ['user', 1]"] --> K
+    K --> R3["GET /api/users/1<br/>(한 번)"]
+  end
+  E ~~~ Q
+  classDef req fill:#fbeaea,stroke:#c0392b,color:#7a2318
+  classDef one fill:#e8f4ec,stroke:#2e9e6b,color:#1d5c3f
+  class R1,R2 req
+  class R3 one

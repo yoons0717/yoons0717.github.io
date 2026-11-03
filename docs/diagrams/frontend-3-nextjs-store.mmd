@@ -1,0 +1,16 @@
+flowchart TB
+  subgraph G["모듈에 만든 스토어 (권하지 않음)"]
+    direction LR
+    GA["요청 A<br/>사용자 kim"] -- "owner = 'kim' 저장" --> GS[("스토어 하나<br/>서버 프로세스 전체가 공유")]
+    GB["요청 B<br/>사용자 lee"] -- "owner 읽음 → 'kim'" --> GS
+  end
+  subgraph R["요청마다 만든 스토어"]
+    direction LR
+    RA["요청 A"] --> SA[("스토어 A")]
+    RB["요청 B"] --> SB[("스토어 B")]
+  end
+  G ~~~ R
+  classDef bad fill:#fbeaea,stroke:#c0392b,color:#7a2318
+  classDef good fill:#e8f4ec,stroke:#2e9e6b,color:#1d5c3f
+  class GS bad
+  class SA,SB good

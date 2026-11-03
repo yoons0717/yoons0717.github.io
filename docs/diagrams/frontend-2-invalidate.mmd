@@ -1,0 +1,15 @@
+sequenceDiagram
+  participant U as 버튼
+  participant M as useMutation
+  participant S as 서버
+  participant C as 쿼리 캐시
+  participant V as 화면의 useQuery
+  U->>M: mutate('lee')
+  M->>S: PATCH /api/users/1
+  S-->>M: 200
+  M->>C: onSuccess → invalidateQueries(['user', 1])
+  Note over C: ['user', 1]을 오래된 상태로 표시
+  C->>V: 화면에 있는 쿼리 → 다시 가져오기
+  V->>S: GET /api/users/1
+  S-->>V: { name: 'lee' }
+  Note over V: 새 이름으로 다시 그림

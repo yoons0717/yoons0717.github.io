@@ -1,0 +1,22 @@
+flowchart LR
+  subgraph P["props로 내리기"]
+    direction TB
+    PA["App<br/>count 상태"] --> PL["Layout<br/>props 전달만"]
+    PL --> PH["Header<br/>count 표시"]
+    PL --> PS["Sidebar<br/>count 안 씀"]
+  end
+  subgraph C["Context"]
+    direction TB
+    CP["CartProvider<br/>{ count, owner }"] -.-> CH["Header<br/>count 읽음"]
+    CP -.-> CO["Profile<br/>owner만 읽음"]
+  end
+  subgraph Z["Zustand 셀렉터"]
+    direction TB
+    ZS[("스토어<br/>{ count, owner }")] -.-> ZH["Header<br/>state.count"]
+    ZS -.-> ZO["Profile<br/>state.owner"]
+  end
+  P ~~~ C ~~~ Z
+  classDef re fill:#fbeaea,stroke:#c0392b,color:#7a2318
+  classDef keep fill:#f4f4f4,stroke:#999,color:#555
+  class PA,PL,PH,PS,CH,CO,ZH re
+  class ZO,CP,ZS keep

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" font-family="'Apple SD Gothic Neo','Noto Sans KR',sans-serif" font-size="13">
+<rect width="760" height="330" fill="#fff"/>
+<text x="20" y="28" font-size="15" font-weight="600" fill="#222">같은 queryKey의 컴포넌트를 처음 그릴 때와 다시 그릴 때</text>
+<text x="20" y="66" font-weight="600" fill="#333">처음 마운트</text>
+<text x="40" y="92" fill="#555">화면</text>
+<rect x="190" y="78" width="200" height="22" fill="#d5d8de"/><text x="290.0" y="93" text-anchor="middle" fill="#333">불러오는 중</text>
+<rect x="390" y="78" width="320" height="22" fill="#5b6cff"/><text x="550.0" y="93" text-anchor="middle" fill="#fff">data (v1)</text>
+<text x="40" y="120" fill="#555">isPending</text>
+<rect x="190" y="106" width="200" height="22" fill="#d9822b"/><text x="290.0" y="121" text-anchor="middle" fill="#fff">true</text>
+<rect x="390" y="106" width="320" height="22" fill="#f1f1f1"/><text x="550.0" y="121" text-anchor="middle" fill="#888">false</text>
+<text x="40" y="148" fill="#555">isFetching</text>
+<rect x="190" y="134" width="200" height="22" fill="#d9822b"/><text x="290.0" y="149" text-anchor="middle" fill="#fff">true</text>
+<rect x="390" y="134" width="320" height="22" fill="#f1f1f1"/><text x="550.0" y="149" text-anchor="middle" fill="#888">false</text>
+<text x="20" y="196" font-weight="600" fill="#333">다시 마운트 (캐시에 v1, 오래된 상태)</text>
+<text x="40" y="222" fill="#555">화면</text>
+<rect x="190" y="208" width="200" height="22" fill="#5b6cff"/><text x="290.0" y="223" text-anchor="middle" fill="#fff">data (v1) 바로 표시</text>
+<rect x="390" y="208" width="320" height="22" fill="#2e9e6b"/><text x="550.0" y="223" text-anchor="middle" fill="#fff">data (v2)</text>
+<text x="40" y="250" fill="#555">isPending</text>
+<rect x="190" y="236" width="520" height="22" fill="#f1f1f1"/><text x="450.0" y="251" text-anchor="middle" fill="#888">false</text>
+<text x="40" y="278" fill="#555">isFetching</text>
+<rect x="190" y="264" width="200" height="22" fill="#d9822b"/><text x="290.0" y="279" text-anchor="middle" fill="#fff">true (백그라운드 요청)</text>
+<rect x="390" y="264" width="320" height="22" fill="#f1f1f1"/><text x="550.0" y="279" text-anchor="middle" fill="#888">false</text>
+<line x1="390" y1="70" x2="390" y2="292" stroke="#c0392b" stroke-dasharray="4 3"/>
+<text x="390" y="312" text-anchor="middle" font-size="12" fill="#c0392b">응답 도착</text>
+<text x="190" y="312" text-anchor="middle" font-size="12" fill="#666">마운트</text>
+</svg>

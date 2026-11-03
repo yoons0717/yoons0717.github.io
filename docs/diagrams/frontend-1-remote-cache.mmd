@@ -1,0 +1,7 @@
+flowchart LR
+  A["개발자 A<br/>turbo run build"] -- "① cache miss → 실행 후<br/>결과 업로드" --> RC[("원격 캐시 서버")]
+  RC -- "② 같은 해시 → 다운로드<br/>실행 건너뜀" --> B["개발자 B<br/>turbo run build"]
+  RC -- "② 같은 해시 → 다운로드<br/>실행 건너뜀" --> CI["CI 서버<br/>turbo run build"]
+  A --- LA[".turbo/cache<br/>(로컬 캐시)"]
+  classDef local fill:#f4f4f4,stroke:#999,color:#555
+  class LA local
